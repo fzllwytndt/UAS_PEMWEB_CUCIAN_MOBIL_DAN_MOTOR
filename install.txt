@@ -1,0 +1,21 @@
+Dalam source code proyek ini, berikut adalah paket-paket yang diinstal dalam `package.json`:
+
+1. @emotion/react dan @emotion/styled: Digunakan untuk pengaturan styling yang memungkinkan pembuatan gaya berbasis CSS-in-JS.
+2. @mui/icons-material dan @mui/material: Merupakan pustaka Material-UI yang menyediakan komponen-komponen UI dengan gaya material design.
+3. @mui/x-data-grid dan @mui/x-date-pickers: Digunakan untuk menampilkan data dalam bentuk tabel interaktif (data grid) dan mengelola input tanggal.
+4. @testing-library/jest-dom, @testing-library/react, dan @testing-library/user-event: Digunakan untuk pengujian komponen React.
+5. bootstrap: Pustaka CSS untuk menyediakan desain UI yang responsif dan modern.
+6. dayjs: Pustaka untuk pengelolaan dan pemformatan tanggal.
+7. jspdf dan jspdf-autotable: Digunakan untuk menghasilkan file PDF dari data yang ada.
+8. react dan react-dom: Komponen utama untuk membuat antarmuka pengguna berbasis React.
+9. react-bootstrap: Komponen Bootstrap yang terintegrasi dengan React.
+10. react-router-dom: Digunakan untuk mengelola routing dalam aplikasi React.
+11. react-scripts: Script untuk membangun dan menjalankan proyek React.
+12. web-vitals: Digunakan untuk mengukur performa aplikasi.
+
+Pada file `App.js`, aplikasi menggunakan beberapa fitur:
+- Router dari `react-router-dom` untuk manajemen halaman, termasuk beberapa rute yang memerlukan akses admin menggunakan komponen ProtectedRoute.
+- Komponen AppBar dan Toolbar dari Material-UI untuk membangun menu navigasi.
+- Struktur utama halaman termasuk komponen seperti Home, About, Registration, Feedback, dan berbagai halaman admin seperti Dashboard, TablePendaftaran, TableTransaksi, dll.
+
+File ini menyiapkan antarmuka dan struktur navigasi aplikasi untuk platform cuci mobil "FAARSA Car Wash".

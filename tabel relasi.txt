@@ -1,0 +1,64 @@
+Berikut adalah diagram relasi antar tabel dengan garis penghubung (foreign key) untuk menunjukkan hubungan antar tabel dalam sistem pencucian mobil:
+
+1. Diagram Relasi
+
+```
++----------------+      1        +----------------+ 
+|    Pengguna    |<--------------|     Login      | 
++----------------+               +----------------+
+| id_pengguna PK |               | id_login PK    |
+| nama           |               | id_pengguna FK |
+| kontak         |               | waktu_login    |
+| tanggal_dibuat |               | waktu_logout   |
++----------------+               +----------------+
+       |                                ^
+       |                                |
+       |                                |
+       |        1                       |      n
+       |                                |
+       v                                |
++----------------+               +----------------+
+|    Antrian     |<--------------|   Transaksi    |
++----------------+               +----------------+
+| id_antrian PK  |               | id_transaksi PK|
+| id_pengguna FK |               | id_pengguna FK |
+| nomor_antrian  |               | id_antrian FK  |
+| status         |               | jumlah         |
+| tanggal_dibuat |               | status_bayar   |
++----------------+               | tanggal_dibuat |
+                                 +----------------+
+
++----------------+
+|    Admin       |
++----------------+
+| id_admin PK    |
+| username       |
+| password_hash  |
+| tanggal_dibuat |
++----------------+
+       |      1 
+       |
+       |
+       v
++----------------+
+|    Laporan     |
++----------------+
+| id_laporan PK  |
+| id_admin FK    |
+| isi_laporan    |
+| tanggal_dibuat |
++----------------+
+```
+
+Penjelasan Relasi:
+1.Relasi `Pengguna` ke `Antrian`: Satu pengguna dapat memiliki banyak antrian (1:n), sehingga `id_pengguna` pada tabel `Antrian` bertindak sebagai foreign key yang terhubung ke `id_pengguna` di tabel `Pengguna`.
+
+2.Relasi `Pengguna` ke `Login`: Satu pengguna dapat melakukan banyak login, sehingga `id_pengguna` pada tabel `Login` berfungsi sebagai foreign key yang menghubungkan ke `id_pengguna` di tabel `Pengguna`.
+
+3.Relasi `Antrian` ke `Transaksi`: Setiap antrian dapat terkait dengan satu atau lebih transaksi, sehingga `id_antrian` pada tabel `Transaksi` menjadi foreign key yang terhubung ke `id_antrian` di tabel `Antrian`.
+
+4.Relasi `Pengguna` ke `Transaksi`: Setiap transaksi terkait dengan satu pengguna, sehingga `id_pengguna` pada tabel `Transaksi` adalah foreign key yang terhubung ke `id_pengguna` di tabel `Pengguna`.
+
+5.Relasi `Admin` ke `Laporan`: Setiap admin dapat membuat banyak laporan, sehingga `id_admin` pada tabel `Laporan` menjadi foreign key yang terhubung ke `id_admin` di tabel `Admin`.
+
+Diagram ini merepresentasikan relasi 1:n di antara tabel, dengan garis penghubung antar foreign key

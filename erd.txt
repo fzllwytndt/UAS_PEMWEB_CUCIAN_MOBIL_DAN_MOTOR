@@ -1,0 +1,52 @@
+Berikut ini adalah ERD (Entity-Relationship Diagram) dari sistem pencucian mobil berdasarkan relasi yang telah dijelaskan.
+
+ERD Sistem Pencucian Mobil
+
+```
++----------------+          1           +----------------+         1          +----------------+         
+|   Pengguna     |<-------------------->|    Antrian     |<------------------>|   Transaksi    |         
++----------------+                      +----------------+                    +----------------+
+| PK id_pengguna |                      | PK id_antrian  |                    | PK id_transaksi|
+| nama           |                      | FK id_pengguna |                    | FK id_pengguna |
+| kontak         |                      | nomor_antrian  |                    | FK id_antrian  |
+| tanggal_dibuat |                      | status         |                    | jumlah         |
++----------------+                      | tanggal_dibuat |                    | status_bayar   |
+                                        +----------------+                    | tanggal_dibuat |
+                                                                               +----------------+
+     
+           |                                                                           ^
+           | 1                                                                          |
+           |                                                                           | n
+           |                                                                           |
+           v                                                                           |
++----------------+                      +----------------+                    +----------------+
+|     Login      |                      |     Admin      |         1         |    Laporan     |
++----------------+                      +----------------+<------------------|                |
+| PK id_login    |                      | PK id_admin    |                    +----------------+
+| FK id_pengguna |                      | username       |                    | PK id_laporan |
+| waktu_login    |                      | password_hash  |                    | FK id_admin   |
+| waktu_logout   |                      | tanggal_dibuat |                    | isi_laporan   |
++----------------+                      +----------------+                    | tanggal_dibuat|
+                                                                              +----------------+
+
+```
+
+Deskripsi ERD
+
+1. Entitas `Pengguna`: Menyimpan data pelanggan. `id_pengguna` adalah Primary Key yang terhubung dengan `Antrian`, `Transaksi`, dan `Login`.
+
+2. Entitas `Antrian`: Menyimpan data antrian pelanggan, seperti nomor antrian dan status antrian. `id_pengguna` sebagai Foreign Key menghubungkan setiap antrian ke pengguna yang bersangkutan.
+
+3. Entitas `Transaksi`: Menyimpan data transaksi, termasuk jumlah pembayaran dan status pembayaran. `id_pengguna` dan `id_antrian` bertindak sebagai Foreign Key, menghubungkan transaksi dengan pengguna dan antrian yang terkait.
+
+4. Entitas `Login`: Mencatat aktivitas login dan logout dari setiap pengguna. `id_pengguna` sebagai Foreign Key menghubungkan aktivitas login ke pengguna.
+
+5. Entitas `Admin`: Menyimpan data admin sistem. `id_admin` adalah Primary Key yang menghubungkan ke entitas `Laporan`.
+
+6. Entitas `Laporan`: Menyimpan laporan yang dibuat oleh admin, dengan `id_admin` sebagai Foreign Key yang terhubung ke `Admin`.
+
+Diagram ini menunjukkan relasi one-to-many antara:
+   - `Pengguna` dan `Antrian`
+   - `Pengguna` dan `Transaksi`
+   - `Pengguna` dan `Login`
+   - `Admin` dan `Laporan`
