@@ -5,14 +5,14 @@ import { Typography, Paper } from '@mui/material';
 
 function Dashboard() {
   return (
-    <div style={{ display: 'flex', backgroundColor: '#f4f6f8', height: '100vh' }}>
+    <div style={{ display: 'flex', backgroundColor: '#f4f6f8', height: '50vh' }}>
       <Sidebar />
       <main style={{ flexGrow: 1, height: '100%', padding: '30px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
         <Paper 
           elevation={3} 
           style={{ 
             padding: '40px', 
-            borderRadius: '12px', 
+            borderRadius: '80px', 
             maxWidth: '600px', 
             width: '100%', 
             textAlign: 'center', 

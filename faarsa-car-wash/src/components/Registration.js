@@ -1,9 +1,12 @@
-// src/components/Registration.js
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, MenuItem, Box, Paper, Divider } from '@mui/material';
+import { 
+  Container, TextField, Button, Typography, MenuItem, Box, Paper, Divider, Card, CardContent 
+} from '@mui/material';
 import { styled } from '@mui/system';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import PrintIcon from '@mui/icons-material/Print';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const FormContainer = styled(Paper)({
   padding: '40px 30px',
@@ -32,6 +35,89 @@ const StyledButton = styled(Button)({
   },
 });
 
+// Fungsi untuk mencetak PDF
+const generatePDF = (receiptData) => {
+  const doc = new jsPDF();
+  
+  doc.setFillColor(255, 111, 0); // Header warna oranye
+  doc.rect(0, 0, doc.internal.pageSize.width, 30, 'F');
+  doc.setFontSize(18);
+  doc.setTextColor(255, 255, 255);
+  doc.text('Struk Pendaftaran Cucian Mobil', 14, 20);
+
+  const receiptDetails = [
+    ['Nama', receiptData.name],
+    ['Alamat', receiptData.address],
+    ['Tipe Mobil', receiptData.carType],
+    ['Jenis Cucian', receiptData.washType],
+    ['Waktu Pendaftaran', receiptData.registrationTime],
+    ['Nomor HP', receiptData.phoneNumber],
+    ['Nomor Plat', receiptData.licensePlate],
+    ['Tanggal Pendaftaran', receiptData.registrationDate],
+    ['Nomor Antrian', receiptData.queueNumber],
+  ];
+
+  doc.autoTable({
+    startY: 40,
+    head: [['Label', 'Informasi']],
+    body: receiptDetails,
+    theme: 'grid',
+    headStyles: { fillColor: [255, 111, 0], textColor: 255 },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+  });
+
+  doc.text('Terima kasih telah menggunakan layanan kami.', 14, doc.internal.pageSize.height - 10);
+  doc.save('Struk_Pendaftaran_Modern.pdf');
+};
+
+const ModernReceipt = ({ receiptData, handleBack }) => (
+  <Card sx={{ maxWidth: 600, margin: 'auto', mt: 4, boxShadow: 3 }}>
+    <CardContent>
+      <Typography variant="h5" sx={{ color: 'primary.main', fontWeight: 'bold', mb: 2 }}>
+        Struk Pendaftaran
+      </Typography>
+      <Divider sx={{ my: 2 }} />
+
+      {[
+        ['Nama', receiptData.name],
+        ['Alamat', receiptData.address],
+        ['Tipe Mobil', receiptData.carType],
+        ['Jenis Cucian', receiptData.washType],
+        ['Waktu Pendaftaran', receiptData.registrationTime],
+        ['Nomor HP', receiptData.phoneNumber],
+        ['Nomor Plat', receiptData.licensePlate],
+        ['Tanggal Pendaftaran', receiptData.registrationDate],
+        ['Nomor Antrian', receiptData.queueNumber],
+      ].map(([label, value]) => (
+        <Typography key={label} sx={{ mb: 1 }}>
+          <strong>{label}:</strong> {value}
+        </Typography>
+      ))}
+
+      <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
+        <Button
+          onClick={() => generatePDF(receiptData)}
+          variant="contained"
+          color="primary"
+          startIcon={<PrintIcon />}
+          fullWidth
+        >
+          Cetak PDF
+        </Button>
+        <Button
+          onClick={handleBack}
+          variant="outlined"
+          color="secondary"
+          startIcon={<ArrowBackIcon />}
+          fullWidth
+        >
+          Kembali
+        </Button>
+      </Box>
+    </CardContent>
+  </Card>
+);
+
 function Registration() {
   const [formData, setFormData] = useState({
     name: '',
@@ -44,9 +130,8 @@ function Registration() {
     queueNumber: 1,
     registrationDate: '',
   });
-  
+
   const [showReceipt, setShowReceipt] = useState(false);
-  const [receiptData, setReceiptData] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,59 +139,17 @@ function Registration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setReceiptData(formData); // Simpan data untuk struk
-    setShowReceipt(true); // Tampilkan struk
-  };
-
-  const handleBack = () => {
-    setShowReceipt(false);
-  };
-
-  // Fungsi untuk mencetak PDF
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text('Struk Pendaftaran Cucian Mobil', 14, 22);
-    doc.setFontSize(12);
-    doc.text(`Nama: ${receiptData.name}`, 14, 32);
-    doc.text(`Alamat: ${receiptData.address}`, 14, 40);
-    doc.text(`Tipe Mobil: ${receiptData.carType}`, 14, 48);
-    doc.text(`Jenis Cucian: ${receiptData.washType}`, 14, 56);
-    doc.text(`Waktu Pendaftaran: ${receiptData.registrationTime}`, 14, 64);
-    doc.text(`Nomor HP: ${receiptData.phoneNumber}`, 14, 72);
-    doc.text(`Nomor Plat: ${receiptData.licensePlate}`, 14, 80);
-    doc.text(`Tanggal Pendaftaran: ${receiptData.registrationDate}`, 14, 88);
-    doc.text(`Nomor Antrian: ${receiptData.queueNumber}`, 14, 96);
-    
-    doc.save('Struk_Pendaftaran.pdf'); // Simpan PDF dengan nama file 'Struk_Pendaftaran.pdf'
+    setShowReceipt(true);
   };
 
   return (
     <Container maxWidth="sm" style={{ padding: '40px 0' }}>
       <FormContainer elevation={3}>
         {showReceipt ? (
-          <Box>
-            <Title variant="h5">Struk Pendaftaran</Title>
-            <Divider sx={{ my: 2 }} />
-            <Typography><strong>Nama:</strong> {receiptData.name}</Typography>
-            <Typography><strong>Alamat:</strong> {receiptData.address}</Typography>
-            <Typography><strong>Tipe Mobil:</strong> {receiptData.carType}</Typography>
-            <Typography><strong>Jenis Cucian:</strong> {receiptData.washType}</Typography>
-            <Typography><strong>Waktu Pendaftaran:</strong> {receiptData.registrationTime}</Typography>
-            <Typography><strong>Nomor HP:</strong> {receiptData.phoneNumber}</Typography>
-            <Typography><strong>Nomor Plat:</strong> {receiptData.licensePlate}</Typography>
-            <Typography><strong>Tanggal Pendaftaran:</strong> {receiptData.registrationDate}</Typography>
-            <Typography><strong>Nomor Antrian:</strong> {receiptData.queueNumber}</Typography>
-            <StyledButton onClick={generatePDF} variant="contained" fullWidth>
-              Cetak PDF
-            </StyledButton>
-            <StyledButton onClick={handleBack} variant="contained" fullWidth>
-              Kembali
-            </StyledButton>
-          </Box>
+          <ModernReceipt receiptData={formData} handleBack={() => setShowReceipt(false)} />
         ) : (
           <>
-            <Title variant="h4">Daftar Cucian Mobil</Title>
+            <Title>Daftar Cucian Mobil</Title>
             <form onSubmit={handleSubmit}>
               <Box display="flex" flexDirection="column" gap={2}>
                 <TextField label="Nama" name="name" onChange={handleChange} required fullWidth />

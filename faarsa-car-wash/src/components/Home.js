@@ -1,4 +1,3 @@
-// src/components/Home.js
 import React from 'react';
 import { Container, Typography, Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
@@ -7,18 +6,26 @@ import { useNavigate } from 'react-router-dom';
 const HeroContainer = styled(Container)({
   textAlign: 'center',
   padding: '60px 20px',
-  backgroundImage: 'url(https://source.unsplash.com/1600x900/?car-wash)',
+  
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   borderRadius: '12px',
   color: '#fff',
-  boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+  boxShadow: '0 4px 20px rgb(0, 0, 0)',
+  minHeight: '400px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
 
 const Overlay = styled(Box)({
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundImage: 'url("/faarsa2.png")',
+  //backgroundImage: 'url("/faarsa.png")',
+  //backgroundPosition: 'full scren',
+  backgroundColor: 'rgba(0, 0, 0, 0)',
   borderRadius: '12px',
   padding: '60px 20px',
+  textAlign: 'center',
 });
 
 const StyledButton = styled(Button)({
@@ -43,8 +50,10 @@ function Home() {
   return (
     <HeroContainer maxWidth="md">
       <Overlay>
-        <Typography variant="h3" gutterBottom>Selamat Datang di FAARSA Car Wash</Typography>
-        <Typography variant="h5" color="inherit" gutterBottom>
+        <Typography variant="h3" gutterBottom style={{ color: 'rgba(255, 255, 255, 0)' }}>
+          Selamat Datang di FAARSA Car Wash
+        </Typography>
+        <Typography variant="h5" color="inherit" gutterBottom style={{ color: 'rgba(255, 255, 255, 0)' }}>
           Layanan cuci mobil andalan Anda dengan kebersihan, kecepatan, dan kepuasan terjamin.
         </Typography>
         <StyledButton variant="contained" onClick={handleRegisterClick}>

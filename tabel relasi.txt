@@ -1,5 +1,3 @@
-Berikut adalah diagram relasi antar tabel dengan garis penghubung (foreign key) untuk menunjukkan hubungan antar tabel dalam sistem pencucian mobil:
-
 1. Diagram Relasi
 
 ```
